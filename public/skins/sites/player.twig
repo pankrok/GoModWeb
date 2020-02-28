@@ -1,0 +1,135 @@
+
+{% extends 'main.twig' %}
+{% block content %}
+{% if player %}
+<div class="col-9 col-s-9">
+
+
+    <div class="box mx-auto p-4">
+	<div class="row">
+	<div class="col-12">
+		{% if message %}
+		<div class="message-green">
+		Kasa gracza {{player.name}} została edytowana!
+		</div>
+		{% endif %}
+		<h1>{{player.name}}</h1>
+		<hr>
+		<form method="post" action="{{ base_url }}/player/{{player.id}}">
+		  Cash:
+		  <div class="row">
+			<div class="col-9">
+			  <input type="text" name="money" value="{{ player.money }}">
+			  <input id="player_id" type="hidden" name="update" value="{{ player.id }}">
+			</div>
+			<div class="col-3">
+			  <input class="btn" type="submit" value="Submit">
+			</div>
+		  </div>
+	</form> 
+	</div>
+	</div>
+	</div>
+	<div class="box mx-auto p-4">
+		<div class="row">
+		<div class="col-12">
+		<span id="alert"></span>
+		<ul class="tabs">
+		<li class="tab-link current" data-tab="tab-1">Statystyki</li>
+		<li class="tab-link" data-tab="tab-2">Skiny</li>
+		<li class="tab-link" data-tab="tab-3">Dodaj Skin</li>
+		
+		</ul>
+		
+			<div id="tab-1" class="tab-content current">
+				<div class="row">
+					<div class="col-xs-4 text-center">
+					<img class="mx-auto" src="{{base_url}}/public/img/crosshair.png" alt="Zabójstw">
+					{{ rank.kills }}
+					</div>
+					<div class="col-xs-4 text-center">
+					<img class="mx-auto" src="{{base_url}}/public/img/rank.png" alt="Rank">
+					{{ rank.rank }}
+					</div>
+					<div class="col-4 text-center">
+					<img class="mx-auto" src="{{base_url}}/public/img/growth.png" alt="EloRank">{{ rank.elorank|number_format(2) }}
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-xs-3 text-center">
+					<img class="mx-auto" src="{{base_url}}/public/img/gold-medal.png" alt="gold medals">
+					{{ rank.gold }}
+					</div>
+					<div class="col-xs-3 text-center">
+					<img class="mx-auto" src="{{base_url}}/public/img/silver-medal.png" alt="silver medals">
+					{{ rank.silver }}
+					</div>
+					<div class="col-xs-3 text-center">
+					<img class="mx-auto" src="{{base_url}}/public/img/bronze-medal.png" alt="bronze medals">
+					{{ rank.bronze }}
+					</div>
+					<div class="col-xs-3 text-center">
+					<img class="mx-auto" src="{{base_url}}/public/img/medal.png" alt="medals">
+					{{ rank.medals }}
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-xs-3 text-center">
+					<img class="mx-auto" src="{{base_url}}/public/img/kills.png" alt="best kills series">
+					{{ rank.bestkills }}
+					</div>
+					<div class="col-xs-3 text-center">
+					<img class="mx-auto" src="{{base_url}}/public/img/headshots.png" alt="best headshot series">
+					{{ rank.besths }}
+					</div>
+					<div class="col-xs-3 text-center">
+					<img class="mx-auto" src="{{base_url}}/public/img/skull.png" alt="longest deaths">
+					{{ rank.bestdeaths }}
+					</div>
+					<div class="col-xs-3 text-center">
+					<img class="mx-auto" src="{{base_url}}/public/img/chart.png" alt="best chart stats">
+					{{ rank.beststats }}
+					</div>
+				</div>
+			</div>
+			<div id="tab-2" class="tab-content">			
+				{% for skin in skins %}
+				<div id="skin-{{ skin.id }}">	
+					<div class="col-3">
+					{{ skin.weapon }}
+					</div>
+					<div class="col-7">
+					{{ skin.skin }}
+					</div>
+					<div class="col-2">
+					<img id="{{ skin.id }}" class="weapon-delete" src="{{ base_url }}/public/img/trash-ico.png">
+					</div>
+				</div>
+				{% endfor %}	
+			</div>
+			<div id="tab-3" class="tab-content">	
+					<div class="row">
+						<div class="col-9">
+							<input id="addSkin" list="guns_skins" placeholder="Wpisz nazwę skina">
+								<datalist id="guns_skins">
+								{% for skins in go_skins %}
+									{% for skin in skins %}
+										<option value="{{ skin }}">
+									{% endfor %}
+								{% endfor %}
+							</datalist> 
+						</div>
+						<div class="col-3">
+							<button id="addSkinBtn" class="btn my-auto">Dodaj</button>
+						</div>
+					</div>
+			</div>
+			
+		
+			
+		</div>
+		</div>
+	</div>
+  </div>
+{% endif %}
+{% endblock %}

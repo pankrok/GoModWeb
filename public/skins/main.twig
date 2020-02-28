@@ -1,0 +1,31 @@
+<html lang="pl">
+<head>
+
+	{% include 'box/header.twig' %}
+	{% block headcontent %}{% endblock %}
+
+</head>
+<body>
+
+	<div class="header m-1">
+	  <a class="logo" href="{{base_url}}/home">GoMod<span class="blue">Panel</span></a><span class="menu-burger right">|||</span>
+	</div>
+<div class="container">
+	<div class="row">
+	{% if auth %}{% include 'box/nav.twig' %}
+		{% block content %}{% endblock %}
+	{% else %}
+	{% include 'sites/auth.twig' %}
+	{% endif %}
+	</div>
+</div>	
+	{% include 'box/footer.twig' %}
+	<script>
+	var base_url = "{{ base_url }}";
+	</script>
+	<script type="text/javascript" src="{{base_url}}/public/js/jquery-3.4.1.min.js" charset="UTF-8"></script>
+	<script type="text/javascript" src="{{base_url}}/public/js/main.js" charset="UTF-8"></script>
+	{% block endcontent %}{% endblock %}
+
+</body>
+</html>
